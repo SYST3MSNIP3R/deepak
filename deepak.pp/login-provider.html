@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ServiceEase - Provider Login</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">ServiceEase</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="#">Services</a>
+                <a href="#">How It Works</a>
+                <a href="#">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="login-page">
+        <section class="login-box">
+            <h2>Service Provider Login</h2>
+            <input type="text" placeholder="Enter phone number or email" id="providerInput"/>
+            <button id="providerContinueBtn">Continue</button>
+
+            <div class="divider"><span>or</span></div>
+
+            <button class="social-btn google">Continue with Google</button>
+            <button class="social-btn apple">Continue with Apple</button>
+            <div class="divider"><span>or</span></div>
+            <button class="social-btn qr">Log in with QR Code</button>
+
+            <p class="consent-text">
+                By proceeding, you consent to get calls, WhatsApp or SMS/RCS messages,
+                including by automated means, from ServiceEase and its affiliates
+                to the number provided.
+            </p>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputField = document.getElementById("providerInput");
+            const continueBtn = document.getElementById("providerContinueBtn");
+
+            function showToast(message, type = 'success') {
+                const toastContainer = document.getElementById('toast-container');
+                
+                const toast = document.createElement('div');
+                toast.classList.add('toast', type);
+
+                const icon = document.createElement('span');
+                icon.classList.add('icon');
+                icon.textContent = type === 'error' ? '❌' : '✅';
+
+                const closeBtn = document.createElement('button');
+                closeBtn.classList.add('close');
+                closeBtn.textContent = '×';
+                closeBtn.onclick = () => toast.remove();
+
+                const messageElement = document.createElement('p');
+                messageElement.textContent = message;
+
+                toast.appendChild(icon);
+                toast.appendChild(messageElement);
+                toast.appendChild(closeBtn);
+
+                toastContainer.appendChild(toast);
+
+                setTimeout(() => toast.remove(), 3500);
+            }
+
+            continueBtn.addEventListener("click", () => {
+                const inputValue = inputField.value.trim();
+                if (inputValue === "") {
+                    showToast("Please enter your phone number or email.", "error");
+                } else {
+                    showToast(`Logging in as provider with: ${inputValue}`, "success");
+                    // Add real login logic here
+                }
+            });
+        });
+    </script>
+</body>
+</html>
